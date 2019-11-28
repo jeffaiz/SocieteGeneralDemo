@@ -27,6 +27,15 @@ public class Employee implements Comparable<Employee> {
 	private String department;
 	
 	
+	public Employee(@Size(min = 1, message = "First Name length should be greater than 1") String firstName,
+			String lastName, String gender, String dateOfBirth, String department) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.gender = gender;
+		this.dateOfBirth = dateOfBirth;
+		this.department = department;
+	}
 	public String getDepartment() {
 		return department;
 	}
