@@ -5,16 +5,17 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.util.StringUtils;
+import com.sgeneral.employee.exception.ItemNotFoundException;
 import com.sgeneral.employee.model.Employee;
 import com.sgeneral.employee.repository.EmployeeService;
-
 @RestController
 public class EmployeeController {
 
@@ -24,6 +25,10 @@ public class EmployeeController {
 	@PostMapping(path = "/api/v1/employee")
 	public ResponseEntity<Employee> createUser(@Valid @RequestBody Employee employee) {
 
+		if(StringUtils.isEmpty(employee.getFirstName())||StringUtils.isEmpty(employee.getLastName()) || StringUtils.isEmpty(employee.getGender()) || StringUtils.isEmpty(employee.getDateOfBirth()) || StringUtils.isEmpty(employee.getDateOfBirth()) ) {
+			throw new ItemNotFoundException("Please enter all employee details"+" "+employee);
+			
+		}
 		employeeService.createEmployee(employee);
 
 		return new ResponseEntity<>(employee, HttpStatus.CREATED);
